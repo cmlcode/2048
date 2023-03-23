@@ -47,6 +47,23 @@ namespace _2048
             }
         }
 
+        public GameManager(bool runTerminal, Random rand)
+        {
+            Score = 0;
+            HighScore = Score;
+            BoardObj = new Board(this, rand);
+            if (runTerminal)
+            {
+                GameLoop();
+                if (PlayAgain())
+                {
+                    ResetGame();
+                    GameLoop();
+                    return;
+                }
+            }
+        }
+
         public bool PlayAgain()
         {
             Console.WriteLine("Play again?(Y/N)");
@@ -98,7 +115,7 @@ namespace _2048
             {
                 BoardObj.AddTile();
                 PrintScreen();
-                if (BoardObj.BoardFull() && HasWinner()) {
+                if (HasWinner()) {
                     Console.WriteLine("GAME OVER");
                     return;
                 }
@@ -126,10 +143,9 @@ namespace _2048
         public void MoveTiles()
         {
             bool hasMoved = false;
-            string direction = "";
             while(!hasMoved)
             {
-                direction = "";
+                string direction = "";
                 while (direction.Equals(""))
                 {
                     direction = GetDirection(Console.ReadKey().Key);
@@ -158,13 +174,13 @@ namespace _2048
 
         public bool HasWinner()
         {
+            if (!BoardObj.BoardFull()) return false;
             //Repeats checking some tiles, come up with more optimized solution
-            for(int TileLoc = 0; TileLoc < 16; TileLoc++)
+            for (int TileLoc = 0; TileLoc < 16; TileLoc++)
             {
                 int TileVal = (int) BoardObj.GetTile(TileLoc).TileVal;
                 if (TileLoc - 4 > 0 && TileVal == BoardObj.GetTile(TileLoc - 4).TileVal)
-                {
-                    
+                {  
                     return false;
                 }
                 if (TileLoc + 4 < 16 && TileVal == BoardObj.GetTile(TileLoc + 4).TileVal)
