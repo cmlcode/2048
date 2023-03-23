@@ -15,6 +15,19 @@ namespace _2048Tests
             Assert.AreEqual(0, ManagerObj.HighScore);
         }
 
+        public void Constructor_noTerminal_setRand()
+        {
+            GameManager ManagerObj;
+            Random rand;
+
+            rand = new Random();
+            ManagerObj = new GameManager(false, rand);
+
+            Assert.AreEqual(0, ManagerObj.Score);
+            Assert.AreEqual(0, ManagerObj.HighScore);
+            Assert.AreEqual(rand, ManagerObj.BoardObj.rnd);
+        }
+
         [TestMethod]
         public void PlayAgain_Yes_Test()
         {
@@ -140,6 +153,18 @@ namespace _2048Tests
 
             Assert.AreEqual(ManagerObj.Score, 0);
             Assert.IsFalse(FunctionRuns);
+        }
+
+        [TestMethod]
+        public void HasWinner_Empty()
+        {
+            GameManager ManagerObj;
+            bool GameOver;
+
+            ManagerObj = new GameManager(false);
+            GameOver = ManagerObj.HasWinner();
+
+            Assert.IsFalse(GameOver);
         }
     }
 }
