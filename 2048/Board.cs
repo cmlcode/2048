@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -13,14 +14,19 @@ namespace _2048
 {
     public class Board
     {
-        private List<Tile> Tiles;
+        private List<Tile> _tiles;
+        public List<Tile> Tiles
+        {
+            get { return _tiles; }
+            private set { _tiles = value; }
+        }
         private HashSet<int> _emptyTiles;
         public HashSet<int> EmptyTiles
         {
             get { return _emptyTiles; }
             private set { _emptyTiles = value; }
         }
-        readonly Random rnd;
+        public readonly Random rnd;
         private GameManager Manager;
 
         public Board(GameManager ManagerObj)
@@ -34,16 +40,36 @@ namespace _2048
             Manager = ManagerObj;
         }
 
+        public Board(GameManager ManagerObj, Random rnd)
+        {
+            EmptyTiles = new HashSet<int>
+            {
+                0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+            };
+            Tiles = new List<Tile>(new Tile[16]);
+            this.rnd = rnd;
+            Manager = ManagerObj;
+        }
+
         public void AddTile()
         {
-            int TileLoc = EmptyTiles.ElementAt(rnd.Next(EmptyTiles.Count()));
+            int TileLoc = -1;
+
+            while (TileLoc > 15 || TileLoc < 0)
+            {
+                TileLoc = EmptyTiles.ElementAt(rnd.Next(EmptyTiles.Count()));
+            }
+
             AddTile(TileLoc);
         }
-        public void AddTile(int TileLoc)
+        public bool AddTile(int TileLoc)
         {
+            if (TileLoc > 15 || TileLoc < 0) return false;
             EmptyTiles.Remove(TileLoc);
             Tiles[TileLoc] = new Tile(2);
+            return true;
         }
+
         public string GetBoard()
         {
             string output = "";
@@ -78,7 +104,7 @@ namespace _2048
                 case -4:
                     HitEdge = NewFileLoc => NewFileLoc < 4;
                     break;
-                case -1:
+                case -1: 
                     HitEdge = NewFileLoc => NewFileLoc%4 == 0;
                     break;
                 case 1:
