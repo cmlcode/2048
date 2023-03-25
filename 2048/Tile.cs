@@ -28,6 +28,7 @@ namespace _2048
         public Tile()
         {
             _tileVal = null;
+            HasCombined= false;
         }
         public void combine(Tile otherTile)
         {
