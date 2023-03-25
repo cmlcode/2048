@@ -51,7 +51,7 @@ namespace _2048
             Manager = ManagerObj;
         }
 
-        public void AddTile()
+        public bool AddTile()
         {
             int TileLoc = -1;
 
@@ -60,7 +60,7 @@ namespace _2048
                 TileLoc = EmptyTiles.ElementAt(rnd.Next(EmptyTiles.Count()));
             }
 
-            AddTile(TileLoc);
+            return AddTile(TileLoc);
         }
         public bool AddTile(int TileLoc)
         {
