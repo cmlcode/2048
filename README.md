@@ -9,4 +9,4 @@ In progress
 ## To Do
 * GUI creation
 * Finish testing
-* Create Highscore System
+* Create Local User System
