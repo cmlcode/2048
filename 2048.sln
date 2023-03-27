@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2048", "2048\2048.csproj", "{A2F8084B-07A3-41B3-8142-42BC29B8FD9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2048Tests", "2048Tests\2048Tests.csproj", "{6330CF3B-E60A-4F16-B5EF-F2E07D084A5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2048TerminalTests", "2048Tests\2048TerminalTests.csproj", "{6330CF3B-E60A-4F16-B5EF-F2E07D084A5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
