@@ -154,6 +154,18 @@ namespace _2048
             }   
         }
 
+        public bool MoveTiles(ConsoleKey UserInput)
+        {
+            string direction = GetDirection(UserInput);
+
+            if(direction == "")
+            {
+                return false;
+            }
+
+            return BoardObj.MoveTiles(direction);
+        }
+
         public void PrintScreen()
         {
             Console.Clear();

@@ -1,13 +1,30 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace _2048
 {
     public class Tile
     {
+        Hashtable TileColor = new Hashtable()
+        {
+            {2, Color.FromRgb(204,192,179)},
+            {4, Color.FromRgb(238,228,218) },
+            {8, Color.FromRgb(242,177,121)},
+            {16, Color.FromRgb(245,149,99)},
+            {32, Color.FromRgb(246,124,95) },
+            {64, Color.FromRgb(246,94,59) },
+            {128, Color.FromRgb(237,204,114) },
+            {256, Color.FromRgb(237,204,97)},
+            {512, Color.FromRgb(237,197,63)},
+            {1024, Color.FromRgb(237,194,45) },
+            {2048, Color.FromRgb(237,224,200)},
+
+        };
         private int? _tileVal;
         public int? TileVal{
             get {
@@ -32,8 +49,12 @@ namespace _2048
         }
         public void combine(Tile otherTile)
         {
-            this.TileVal = this.TileVal + otherTile.TileVal;
-            this.HasCombined = true;
+            TileVal = TileVal + otherTile.TileVal;
+            HasCombined = true;
+        }
+        public Color GetColor()
+        {
+            return (Color)TileColor[TileVal];
         }
     }
 }
