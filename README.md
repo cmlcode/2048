@@ -5,10 +5,12 @@
 * Tests Written
 
 ## GUI
-In progress
+* Runs by default
+* Only have colors up to 2048 tile
+* No High score value yet
 
 ## To Do
-* GUI creation
+* Finish GUI
 * Comment Code
 * Finish testing
 * Create Local User System
