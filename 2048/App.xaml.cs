@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
+using _2048;
 
-namespace _2048
+namespace _2048Board
 {
     /// <summary>
     /// Interaction logic for App.xaml
