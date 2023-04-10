@@ -6,8 +6,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using _2048;
 
-namespace _2048
+namespace _2048Board
 {
     
     /// <summary>
@@ -48,13 +49,13 @@ namespace _2048
         public void GameLoop()
         { 
             ManagerObj.BoardObj.AddTile();
+            FillTiles();
             if (ManagerObj.HasWinner())
             {
                 Console.WriteLine("Game Over");
                 MessageBox.Show("Game Over");
                 return;
             }
-            FillTiles();
             IsPlaying = true;
         }
             
