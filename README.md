@@ -6,10 +6,10 @@
 
 ## GUI
 * Runs by default
-* No High score value yet
+* No play again option
 
 ## To Do
 * Finish GUI
 * Comment Code
 * Finish testing
-* Create Local User System
+* Create Local User System w/ database
