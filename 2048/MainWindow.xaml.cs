@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -35,7 +36,7 @@ namespace _2048
             Console.WriteLine("Loaded");
             ManagerObj = new GameManager(false);
             ScoreDisplay = this.FindName("ScoreLabel") as Label;
-            ScoreDisplay.Content = "Score: " + ManagerObj.Score;
+            ScoreDisplay.Content = "Score: " + ManagerObj.Score+ "\tHigh Score: "+ ManagerObj.HighScore;
 
         }
         void WindowRendered(object sender, EventArgs e)
@@ -49,6 +50,7 @@ namespace _2048
             ManagerObj.BoardObj.AddTile();
             if (ManagerObj.HasWinner())
             {
+                Console.WriteLine("Game Over");
                 MessageBox.Show("Game Over");
                 return;
             }
@@ -79,7 +81,7 @@ namespace _2048
                 e.Handled = true;
                 IsPlaying = false;
 
-                ScoreDisplay.Content = "Score: " + ManagerObj.Score;
+                ScoreDisplay.Content = "Score: " + ManagerObj.Score + "\tHigh Score: " + ManagerObj.HighScore;
                 GameLoop();
             }
             else
