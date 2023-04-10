@@ -1,6 +1,9 @@
-namespace _2048Tests
+﻿using _2048;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+
+namespace TerminalTests
 {
-    using _2048;
     [TestClass]
     public class GameManagerTests
     {
@@ -49,7 +52,7 @@ namespace _2048Tests
             ManagerObj = new GameManager(false);
             PlayAgainVal = ManagerObj.PlayAgain(ConsoleKey.N);
 
-            Assert.IsFalse(PlayAgainVal);  
+            Assert.IsFalse(PlayAgainVal);
         }
 
         [TestMethod]

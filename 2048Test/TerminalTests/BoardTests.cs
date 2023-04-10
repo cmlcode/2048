@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using _2048;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
-namespace _2048Tests
+namespace TerminalTests
 {
-    using _2048;
     [TestClass]
     public class BoardTests
     {
@@ -19,7 +16,7 @@ namespace _2048Tests
             ManagerObj = new GameManager(false);
             BoardObj = ManagerObj.BoardObj;
 
-            Assert.AreEqual(BoardObj.EmptyTiles.Count,16);
+            Assert.AreEqual(BoardObj.EmptyTiles.Count, 16);
             Assert.IsNull(BoardObj.GetTile(0));
         }
 
@@ -125,7 +122,7 @@ namespace _2048Tests
             Random rand;
 
             rand = new Random(10);
-            ManagerObj = new GameManager(false,rand);
+            ManagerObj = new GameManager(false, rand);
             BoardObj = ManagerObj.BoardObj;
             BoardObj.AddTile();
             BoardObj.MoveTiles("up");
@@ -164,7 +161,8 @@ namespace _2048Tests
         }
 
         [TestMethod]
-        public void MoveTile_Right(){
+        public void MoveTile_Right()
+        {
             GameManager ManagerObj;
             Board BoardObj;
 
@@ -172,7 +170,7 @@ namespace _2048Tests
             BoardObj = ManagerObj.BoardObj;
             BoardObj.AddTile(0);
             BoardObj.MoveTiles("right");
-            
+
             //Checks if tile count is correct
             Assert.AreEqual(BoardObj.EmptyTiles.Count, 15);
             //Checks if tile is at new spot

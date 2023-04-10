@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using _2048;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace _2048Tests
+namespace TerminalTests
 {
-    using _2048;
     [TestClass]
     public class TileTests
     {
@@ -25,7 +21,7 @@ namespace _2048Tests
         public void Constructor_ProvidedVal()
         {
             Tile tile;
-                
+
             tile = new Tile(2);
 
             Assert.AreEqual(2, tile.TileVal);
@@ -33,13 +29,13 @@ namespace _2048Tests
         }
 
         [TestMethod]
-        public void combine()
+        public void Combine()
         {
             Tile TileObj;
             Tile OtherTileObj;
 
             TileObj = new Tile(2);
-            OtherTileObj= new Tile(2);
+            OtherTileObj = new Tile(2);
             TileObj.combine(OtherTileObj);
 
             Assert.AreEqual(TileObj.TileVal, 4);
