@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Reactive.Subjects;
 
 namespace _2048
@@ -179,25 +180,30 @@ namespace _2048
 
         public bool HasWinner()
         {
-            if (!BoardObj.BoardFull()) return false;
+            if (!BoardObj.BoardFull())
+            {
+                Console.WriteLine("Board not full-Empty Tiles: " + BoardObj.EmptyTiles.Count.ToString());
+                return false;
+            }
             //Repeats checking some tiles, come up with more optimized solution
             for (int TileLoc = 0; TileLoc < 16; TileLoc++)
             {
-                int TileVal = (int) BoardObj.GetTile(TileLoc).TileVal;
-                if (TileLoc - 4 > 0 && TileVal == BoardObj.GetTile(TileLoc - 4).TileVal)
-                {  
+                int? TileVal = BoardObj.GetTile(TileLoc).TileVal;
+                if(TileVal == null)
+                {
+                    Console.WriteLine("Tile empty");
                     return false;
                 }
-                if (TileLoc + 4 < 16 && TileVal == BoardObj.GetTile(TileLoc + 4).TileVal)
+                //Checks if tile is equal to the tile below it, doesn't run if tile is bottom tile
+                if (TileLoc < 12 && TileVal == BoardObj.GetTile(TileLoc + 4).TileVal)
                 {
+                    Console.WriteLine("Down Tile Match");
                     return false;
                 }
-                if (TileLoc - 1 > 0 && TileVal == BoardObj.GetTile(TileLoc - 1).TileVal)
+                //Check if the tile is equal to the tile on its right, doesn't run if tile is a rightmost tile
+                if (TileLoc % 4 != 3 && TileVal == BoardObj.GetTile(TileLoc + 1).TileVal)
                 {
-                    return false;
-                }   
-                if (TileLoc + 1 > 0 && TileVal == BoardObj.GetTile(TileLoc + 1).TileVal)
-                {
+                    Console.WriteLine("Right Tile Match Tile: " + TileLoc);
                     return false;
                 }
             }
