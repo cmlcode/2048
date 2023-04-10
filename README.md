@@ -6,7 +6,6 @@
 
 ## GUI
 * Runs by default
-* Only have colors up to 2048 tile
 * No High score value yet
 
 ## To Do
