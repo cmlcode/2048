@@ -8,7 +8,7 @@ namespace _2048
         Hashtable TileColor = new Hashtable()
         {
             {2, Color.FromRgb(238,228,218)},
-            {4, Color.FromRgb(237,224,205) },
+            {4, Color.FromRgb(255,197,165) },
             {8, Color.FromRgb(242,177,121)},
             {16, Color.FromRgb(245,149,99)},
             {32, Color.FromRgb(246,124,95) },
