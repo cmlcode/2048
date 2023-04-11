@@ -16,7 +16,9 @@ namespace _2048Board
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Determines if player can make moves
         bool IsPlaying = false;
+        //Converts string inputs from KeyEventArgs to ConsoleKeys
         readonly Hashtable InputConversion = new Hashtable()
         {
             {"Left", ConsoleKey.LeftArrow},
@@ -34,6 +36,11 @@ namespace _2048Board
         
         void WindowLoaded(object sender, RoutedEventArgs e)
         {
+            /*
+             * Runs when window is loaded
+             * Creates gameObjects necessary to run
+             * Displays starting scores
+            */
             //Console.WriteLine("Loaded");
             ManagerObj = new GameManager(false);
             ScoreDisplay = this.FindName("ScoreLabel") as Label;
@@ -42,6 +49,10 @@ namespace _2048Board
         }
         void WindowRendered(object sender, EventArgs e)
         {
+            /*
+             * Runs when window is fully rendered
+             * Prints the tiles and starts the game
+            */
             FillTiles();
             //Console.WriteLine("Rendered");
             GameLoop();
@@ -49,6 +60,7 @@ namespace _2048Board
 
         public void EndGame()
         {
+            //Creates message box showing game is over and asking to play again
             string EndText;
 
             EndText = "GAME OVER\nScore = " + ManagerObj.Score;
@@ -65,6 +77,7 @@ namespace _2048Board
 
         public void GameLoop()
         { 
+            //Manages game actions and when player can give inputs
             ManagerObj.BoardObj.AddTile();
             FillTiles();
             if (ManagerObj.CheckIfGameOver())
@@ -75,13 +88,13 @@ namespace _2048Board
             IsPlaying = true;
         }
 
-        public bool HasWinner()
-        {
-            return false;
-        }
-
         private void KeyPressed(object sender, KeyEventArgs e)
         {
+            /*
+             * Runs when player hits a key
+             * Checks if player an give inputs
+             * If so, processes input and continues game
+            */
             if (!IsPlaying)
             {
                 return;
@@ -107,6 +120,7 @@ namespace _2048Board
 
         public void FillTiles()
         {
+            //Redraws board based on tiles in GameManager.Board array
             List<Tile> Tiles = ManagerObj.BoardObj.Tiles;
             int RowCount = 0;
             int ColCount = 0;
