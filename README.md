@@ -9,5 +9,5 @@
 * namespace _2048Board
 
 ## To Do
-* Comment Code
+* Comment GUI Code
 * Create Local User System w/ database
