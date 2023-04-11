@@ -1,38 +1,51 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reactive.Subjects;
 
 namespace _2048
 {
-    public class GameManager : INotifyPropertyChanged
+    public class GameManager
     {
-        private readonly BehaviorSubject<int> _score = new BehaviorSubject<int>(0);
-        internal void NotifyPropertyChanged(string propertyName) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //Player's current score
+        private int _score;
         public int Score
         {
-            get => _score.Value;
-            private set => _score.OnNext(value);
+            get => _score;
+            private set => _score = value;
         }
-        private int _highScore;
+
+        //Player's highscore
+        private int _highScore = 0;
         public int HighScore
         {
             get => _highScore;
-            private set => _highScore = value;
+            private set
+            {
+                if (value > _highScore)
+                {
+                    _highScore = value;
+                }
+            }
         }
+
+        //Board being played on
         public Board BoardObj;
-        public event PropertyChangedEventHandler PropertyChanged;
-        public IObservable<int> ScoreObservable => _score;
 
         public GameManager(bool runTerminal)
         {
+            /*
+             * Creates new game 
+             * If game runs in terminal, starts the game and handles new game
+             */
             Score = 0;
-            HighScore = Score;
+
+            //Creates new board to play on
             BoardObj = new Board(this);
+
+            //If the game is played on the terminal, handle game start and end
             if (runTerminal){
                 GameLoop();
-                if (PlayAgain())
+                if (GetPlayAgainInput())
                 {
                     ResetGame();
                     GameLoop();
@@ -43,13 +56,18 @@ namespace _2048
 
         public GameManager(bool runTerminal, Random rand)
         {
+            /*
+             * Game manager with set random value for board creation
+             * Follows logic of previous game manager
+             */
             Score = 0;
             HighScore = Score;
             BoardObj = new Board(this, rand);
+
             if (runTerminal)
             {
                 GameLoop();
-                if (PlayAgain())
+                if (GetPlayAgainInput())
                 {
                     ResetGame();
                     GameLoop();
@@ -58,10 +76,15 @@ namespace _2048
             }
         }
 
-        public bool PlayAgain()
+        public bool GetPlayAgainInput()
         {
-            Console.WriteLine("Play again?(Y/N)");
+            // Gets user input on whether to play again or not
+
+            //Get user input
+            Console.WriteLine("Play again? (Y/N)");
             ConsoleKey InputKey = Console.ReadKey().Key;
+
+            //interpret user input, guarentees that input is a Y or N
             while (InputKey != ConsoleKey.Y || InputKey != ConsoleKey.N)
             {
                 if (InputKey == ConsoleKey.Y)
@@ -77,9 +100,9 @@ namespace _2048
             return false;
         }
 
-        public bool PlayAgain(ConsoleKey UserInput)
+        public bool GetPlayAgainInput(ConsoleKey UserInput)
         {
-            Console.WriteLine("Play again?(Y/N)");
+            //Used to test GetPlayAgainInput() with set inputs
             ConsoleKey InputKey = UserInput;
             while (InputKey != ConsoleKey.Y || InputKey != ConsoleKey.N)
             {
@@ -98,6 +121,7 @@ namespace _2048
 
         public void ResetGame()
         {
+            //Resets the game state
             Score = 0;
             BoardObj = new Board(this);
         }
@@ -105,11 +129,13 @@ namespace _2048
 
         public void GameLoop()
         {
+            //Handles game turns
+
             while (true)
             {
                 BoardObj.AddTile();
-                PrintScreen();
-                if (HasWinner()) {
+                PrintBoard();
+                if (CheckIfGameOver()) {
                     Console.WriteLine("GAME OVER");
                     return;
                 }
@@ -119,6 +145,10 @@ namespace _2048
 
         public string GetDirection(ConsoleKey InputKey)
         {
+            /*
+             * Converts user input to string determining direction
+             * Used to filter out wrong inputs 
+             */
             switch (InputKey)
             {
                 case ConsoleKey.UpArrow:
@@ -130,26 +160,31 @@ namespace _2048
                 case ConsoleKey.DownArrow:
                     return "down";
                 default:
-                    return"";
+                    return "";
             }
         }
 
         public void MoveTiles()
         {
+            //Determines whether player's move is possible and makes the move
             bool hasMoved = false;
             while(!hasMoved)
             {
+                //Checks if user's input is a possible option
                 string direction = "";
                 while (direction.Equals(""))
                 {
                     direction = GetDirection(Console.ReadKey().Key);
                 }
+
+                //Checks if the user's input is currently possible
                 hasMoved = BoardObj.MoveTiles(direction);
             }   
         }
 
         public bool MoveTiles(ConsoleKey UserInput)
         {
+            //Used to test GetPlayAgainInput() with set inputs
             string direction = GetDirection(UserInput);
 
             if(direction == "")
@@ -160,8 +195,9 @@ namespace _2048
             return BoardObj.MoveTiles(direction);
         }
 
-        public void PrintScreen()
+        public void PrintBoard()
         {
+            //Prints the active state of the board
             Console.Clear();
             Console.WriteLine("Score: {0}\tHighScore: {1}", Score,HighScore);
             Console.WriteLine(BoardObj.GetBoard());
@@ -169,6 +205,10 @@ namespace _2048
 
         public bool IncreaseScore(int val)
         {
+            /*
+             * Increases score by set amount, checks that input is a positive value
+             * Increases highscore if necessary
+             */
             if (val < 0)
             {
                 return false; 
@@ -178,20 +218,21 @@ namespace _2048
             return true;
         }
 
-        public bool HasWinner()
+        public bool CheckIfGameOver()
         {
+            //Determines whether the game is finished, returns true if so
+
+            //Game is not over if there's still open spots
             if (!BoardObj.BoardFull())
             {
                 return false;
             }
-            //Repeats checking some tiles, come up with more optimized solution
+            //Checks if tile is equal to tile to the right and below it
             for (int TileLoc = 0; TileLoc < 16; TileLoc++)
             {
-                int? TileVal = BoardObj.GetTile(TileLoc).TileVal;
-                if(TileVal == null)
-                {
-                    return false;
-                }
+                //Tile has to have a value due to BoardFull check
+                int TileVal = (int)BoardObj.GetTile(TileLoc).TileVal;
+
                 //Checks if tile is equal to the tile below it, doesn't run if tile is bottom tile
                 if (TileLoc < 12 && TileVal == BoardObj.GetTile(TileLoc + 4).TileVal)
                 {
@@ -203,6 +244,8 @@ namespace _2048
                     return false;
                 }
             }
+
+            //If doesn't meet any of the above conditions, the game is over and return true
             return true;
         }
 
