@@ -34,7 +34,7 @@ namespace _2048Board
         
         void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Loaded");
+            //Console.WriteLine("Loaded");
             ManagerObj = new GameManager(false);
             ScoreDisplay = this.FindName("ScoreLabel") as Label;
             ScoreDisplay.Content = "Score: " + ManagerObj.Score+ "\tHigh Score: "+ ManagerObj.HighScore;
@@ -43,7 +43,7 @@ namespace _2048Board
         void WindowRendered(object sender, EventArgs e)
         {
             FillTiles();
-            Console.WriteLine("Rendered");
+            //Console.WriteLine("Rendered");
             GameLoop();
         }
 
