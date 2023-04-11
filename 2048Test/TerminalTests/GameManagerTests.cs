@@ -32,25 +32,25 @@ namespace TerminalTests
         }
 
         [TestMethod]
-        public void PlayAgain_Yes_Test()
+        public void GetPlayAgainInput_Yes_Test()
         {
             GameManager ManagerObj;
             bool PlayAgainVal;
 
             ManagerObj = new GameManager(false);
-            PlayAgainVal = ManagerObj.PlayAgain(ConsoleKey.Y);
+            PlayAgainVal = ManagerObj.GetPlayAgainInput(ConsoleKey.Y);
 
             Assert.IsTrue(PlayAgainVal);
         }
 
         [TestMethod]
-        public void PlayAgain_No_Test()
+        public void GetPlayAgainInput_No_Test()
         {
             GameManager ManagerObj;
             bool PlayAgainVal;
 
             ManagerObj = new GameManager(false);
-            PlayAgainVal = ManagerObj.PlayAgain(ConsoleKey.N);
+            PlayAgainVal = ManagerObj.GetPlayAgainInput(ConsoleKey.N);
 
             Assert.IsFalse(PlayAgainVal);
         }
@@ -159,13 +159,13 @@ namespace TerminalTests
         }
 
         [TestMethod]
-        public void HasWinner_Empty()
+        public void CheckIfGameOver_Empty()
         {
             GameManager ManagerObj;
             bool GameOver;
 
             ManagerObj = new GameManager(false);
-            GameOver = ManagerObj.HasWinner();
+            GameOver = ManagerObj.CheckIfGameOver();
 
             Assert.IsFalse(GameOver);
         }

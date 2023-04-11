@@ -67,7 +67,7 @@ namespace _2048Board
         { 
             ManagerObj.BoardObj.AddTile();
             FillTiles();
-            if (ManagerObj.HasWinner())
+            if (ManagerObj.CheckIfGameOver())
             {
                 EndGame();
                 return;
