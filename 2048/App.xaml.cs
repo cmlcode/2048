@@ -10,12 +10,23 @@ namespace _2048Board
     /// </summary>
     public partial class App : Application
     {
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        const int SW_HIDE = 0;
+        const int SW_SHOW = 5;
+
         protected override void OnStartup(StartupEventArgs e)
         {
+            var handle = GetConsoleWindow();
+            ShowWindow(handle, SW_HIDE);
             base.OnStartup(e);
             string[] args = e.Args;
             if (args .Length == 0) {
-                Console.WriteLine("No args");
+                
                 var window = new MainWindow();
                 window.ShowDialog();
                 return;
@@ -23,15 +34,14 @@ namespace _2048Board
             foreach (string arg in args){
                 if (arg == "-t")
                 {
+                    ShowWindow(handle, SW_SHOW);
                     Console.WriteLine("Terminal args");
-                    AllocConsole();
                     GameManager gameObj = new GameManager(true);
                     return;
                 }
             }
         }
 
-        [DllImport("Kernel32.dll")]
-        static extern void AllocConsole();
+        
     }
 }
