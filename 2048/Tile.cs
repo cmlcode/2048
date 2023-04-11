@@ -5,6 +5,7 @@ namespace _2048
 {
     public class Tile
     {
+        //Gets the color of the tile based on its value
         Hashtable TileColor = new Hashtable()
         {
             {2, Color.FromRgb(238,228,218)},
@@ -26,6 +27,8 @@ namespace _2048
             {131072, Color.FromRgb(0,0,165)}
 
         };
+        
+        //Value displayed on the cell
         private int? _tileVal;
         public int? TileVal{
             get {
@@ -36,25 +39,33 @@ namespace _2048
                 _tileVal = value;
             }
         }
+
+        //Whether the cell has already combined with another cell in a round of movement
         public bool HasCombined;
 
-        public Tile(int? NewTileValue)
+        public Tile()
         {
+            //Creates a null tile
+            _tileVal = null;
+            HasCombined = false;
+        }
+
+        public Tile(int NewTileValue)
+        {
+            //Creates a tile with a set value
             TileVal = NewTileValue;
             HasCombined = false;
         }
-        public Tile()
-        {
-            _tileVal = null;
-            HasCombined= false;
-        }
+        
         public void combine(Tile otherTile)
         {
+            //Combines a tile with the other tile
             TileVal = TileVal + otherTile.TileVal;
             HasCombined = true;
         }
         public Color GetColor()
         {
+            //Gets the color of the cell from the hashtable
             return (Color)TileColor[TileVal];
         }
     }
