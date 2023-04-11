@@ -46,20 +46,34 @@ namespace _2048Board
             Console.WriteLine("Rendered");
             GameLoop();
         }
+
+        public void EndGame()
+        {
+            string EndText;
+
+            EndText = "GAME OVER\nScore = " + ManagerObj.Score;
+
+            if (MessageBox.Show(EndText,"Play Again?",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                ManagerObj.ResetGame();
+                ScoreDisplay.Content = "Score: 0\tHigh Score: " + ManagerObj.HighScore;
+                FillTiles();
+                GameLoop();
+                return;
+            }
+        }
+
         public void GameLoop()
         { 
             ManagerObj.BoardObj.AddTile();
             FillTiles();
             if (ManagerObj.HasWinner())
             {
-                Console.WriteLine("Game Over");
-                MessageBox.Show("Game Over");
+                EndGame();
                 return;
             }
             IsPlaying = true;
         }
-            
-
 
         public bool HasWinner()
         {
@@ -110,6 +124,7 @@ namespace _2048Board
                 else
                 {
                     ((Label)GameGrid.Children[TileCount]).Background = new SolidColorBrush(Tiles[TileCount].GetColor());
+                    ((Label)GameGrid.Children[TileCount]).BorderBrush = new SolidColorBrush(Colors.Black);
                     ((Label)GameGrid.Children[TileCount]).Content = Tiles[TileCount].TileVal.ToString();
                 }
                 
