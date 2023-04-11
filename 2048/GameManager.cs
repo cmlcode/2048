@@ -200,7 +200,7 @@ namespace _2048
             //Prints the active state of the board
             Console.Clear();
             Console.WriteLine("Score: {0}\tHighScore: {1}", Score,HighScore);
-            Console.WriteLine(BoardObj.GetBoard());
+            Console.WriteLine(BoardObj);
         }
 
         public bool IncreaseScore(int val)
