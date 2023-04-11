@@ -182,7 +182,6 @@ namespace _2048
         {
             if (!BoardObj.BoardFull())
             {
-                Console.WriteLine("Board not full-Empty Tiles: " + BoardObj.EmptyTiles.Count.ToString());
                 return false;
             }
             //Repeats checking some tiles, come up with more optimized solution
@@ -191,19 +190,16 @@ namespace _2048
                 int? TileVal = BoardObj.GetTile(TileLoc).TileVal;
                 if(TileVal == null)
                 {
-                    Console.WriteLine("Tile empty");
                     return false;
                 }
                 //Checks if tile is equal to the tile below it, doesn't run if tile is bottom tile
                 if (TileLoc < 12 && TileVal == BoardObj.GetTile(TileLoc + 4).TileVal)
                 {
-                    Console.WriteLine("Down Tile Match");
                     return false;
                 }
                 //Check if the tile is equal to the tile on its right, doesn't run if tile is a rightmost tile
                 if (TileLoc % 4 != 3 && TileVal == BoardObj.GetTile(TileLoc + 1).TileVal)
                 {
-                    Console.WriteLine("Right Tile Match Tile: " + TileLoc);
                     return false;
                 }
             }
